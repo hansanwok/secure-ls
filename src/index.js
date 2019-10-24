@@ -33,9 +33,17 @@ export default class SecureLS {
     this.config.encodingType = (typeof config.encodingType !== 'undefined' || config.encodingType === '') ?
       config.encodingType.toLowerCase() :
       constants.EncrytionTypes.BASE64;
+
+    this.config.useLocalStorage = typeof config.useLocalStorage !== 'undefined' ? config.useLocalStorage : true;
+
     this.config.encryptionSecret = config.encryptionSecret;
 
-    this.ls = localStorage;
+    if (this.config.useLocalStorage) {
+      this.ls = localStorage;
+    } else {
+      this.ls = sessionStorage;
+    }
+
     this.init();
   };
 
